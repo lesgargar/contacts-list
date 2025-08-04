@@ -1,4 +1,4 @@
-import avatarImg from "../../assets/img/avatarImg.png";
+import avatarImg from "../../assets/img/avatarimg.png";
 import ContactDetail from "../ContactDetail";
 import LocationIcon from "../../assets/icons/location.svg?react";
 import PhoneIcon from "../../assets/icons/phone.svg?react";

@@ -16,22 +16,29 @@ export default function NewContactForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("inputvalue", inputValue);
+    if (!inputValue.name.length) {
+      alert("por favor asigna un nombre");
+    }
     try {
-      const response = await fetch(
-        "https://playground.4geeks.com/contact/agendas/mycontacts/contacts",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(inputValue),
+      if (inputValue.name.length) {
+        const response = await fetch(
+          "https://playground.4geeks.com/contact/agendas/mycontacts/contacts",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(inputValue),
+          }
+        );
+
+        console.log(response);
+
+        if (inputValue.name.length > 0 && response.status === 201) {
+          const newContact = await response.json();
+          dispatch({ type: "add_contact", payload: newContact });
+          navigate("/");
+        } else {
+          alert("no se agrego el contacto");
         }
-      );
-      console.log(response);
-      if (response.status === 201) {
-        const newContact = await response.json();
-        dispatch({ type: "add_contact", payload: newContact });
-        navigate("/");
-      } else {
-        alert("no se agrego el contacto");
       }
     } catch (error) {
       console.log(error);

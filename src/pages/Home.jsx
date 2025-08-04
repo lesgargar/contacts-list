@@ -8,7 +8,7 @@ export const Home = () => {
   const [contactsList, setContactsList] = useState([]);
 
   useEffect(() => {
-    //createAgenda();
+    createAgenda();
     dispatch({ type: "set_contacts", payload: [] }); //<- con esta linea limpiamos antes de traer los contacts y no quede valores previos
     getContacts();
   }, []);
@@ -44,10 +44,14 @@ export const Home = () => {
   return (
     <div className="text-center mt-5">
       <h1>mis contactos</h1>
-      {store.contacts &&
+      {Array.isArray(store.contacts) && store.contacts.length ? (
+        store.contacts &&
         store.contacts.map((contact, index) =>
           contact ? <ContactCard key={contact.id} contact={contact} /> : null
-        )}
+        )
+      ) : (
+        <div>No hay contactos aun </div>
+      )}
     </div>
   );
 };
